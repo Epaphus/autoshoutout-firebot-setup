@@ -1,6 +1,6 @@
 ## **IN BETA**  
 
-Auto Shoutout and Shoutout queuing system made by Epaphus (EpaphusUK On Twitch)    
+Auto Shoutout and Shoutout queuing system for Firebot made by Epaphus (EpaphusUK On Twitch)    
    
 This system will:   
 - Auto shouts out raids (Raiders will be put to the front of the queue)  
