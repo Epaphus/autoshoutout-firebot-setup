@@ -1,0 +1,994 @@
+{
+    "name": "Auto Shoutout",
+    "description": "Auto Shoutout and Shoutout queuing system made by Epaphus (EpaphusUK On Twitch)    \n   \nThis system will:   \n- Auto shouts out raids  \n- Auto shoutout viewers who have the autoshoutout role when they first speak in chat\n- Queue up standard \"!so\" shoutouts \n   \nThe queue set setup to allow enough time between shoutouts for the Twitch /shoutout command to cool down.   \nBy default the shoutout queue will be paused for 15 minutes at the start of the steam, this allows time for viewers to build to up so the early birds are not shouted out to themselves.   \n\nhttps://github.com/Epaphus/autoshoutout-firebot-setup",
+    "version": 1,
+    "author": "epaphusuk",
+    "components": {
+        "commands": [
+            {
+                "active": true,
+                "simple": false,
+                "sendCooldownMessage": true,
+                "cooldownMessage": "This command is still on cooldown for: {timeLeft}",
+                "cooldown": {},
+                "effects": {
+                    "id": "a291a79f-bf9e-47a3-8887-82d3244ba0ed",
+                    "list": [
+                        {
+                            "id": "9ea8ef60-d92a-11ef-9cb2-07f8188c657b",
+                            "type": "firebot:sequentialeffect",
+                            "active": true,
+                            "effectList": {
+                                "list": [
+                                    {
+                                        "id": "a0c93750-d92a-11ef-9cb2-07f8188c657b",
+                                        "type": "firebot:runcommand",
+                                        "active": true,
+                                        "commandType": "custom",
+                                        "commandId": "51449b10-d926-11ef-80be-dbec1d55b083",
+                                        "args": "$target",
+                                        "percentWeight": null,
+                                        "effectLabel": "Do the shoutout"
+                                    }
+                                ],
+                                "id": "9ea9d9c0-d92a-11ef-9cb2-07f8188c657b",
+                                "queue": "11fd7640-21dc-11ef-8b67-75527b2d8771",
+                                "queuePriority": "none"
+                            },
+                            "percentWeight": null,
+                            "effectLabel": "Add shoutout to queue"
+                        },
+                        {
+                            "id": "f1d417b0-d929-11ef-9cb2-07f8188c657b",
+                            "type": "firebot:conditional-effects",
+                            "active": true,
+                            "ifs": [
+                                {
+                                    "conditionData": {
+                                        "mode": "exclusive",
+                                        "conditions": [
+                                            {
+                                                "type": "firebot:custom",
+                                                "comparisonType": "is greater than",
+                                                "value": null,
+                                                "leftSideValue": "$effectQueueLength[Shoutouts]",
+                                                "rightSideValue": "0"
+                                            }
+                                        ]
+                                    },
+                                    "effectData": {
+                                        "list": [
+                                            {
+                                                "id": "0caf6075-d917-11ef-93cc-e7349bc663d1",
+                                                "type": "firebot:chat",
+                                                "active": false,
+                                                "chatter": "Streamer",
+                                                "message": "Shoutout added to queue ($effectQueueLength[Shoutouts])",
+                                                "percentWeight": null,
+                                                "effectLabel": "Added user to queue and length"
+                                            },
+                                            {
+                                                "id": "95955bb0-da7f-11ef-92e0-77515767cc68",
+                                                "type": "firebot:chat-feed-alert",
+                                                "active": true,
+                                                "message": "Shoutout for $target queued ($effectQueueLength[Shoutouts])",
+                                                "percentWeight": null,
+                                                "effectLabel": "Added user to queue and length"
+                                            }
+                                        ],
+                                        "id": "0caf6076-d917-11ef-93cc-e7349bc663d1"
+                                    },
+                                    "label": "Queue message if SOs are waiting"
+                                }
+                            ],
+                            "otherwiseEffectData": {
+                                "list": [],
+                                "id": "0caf6077-d917-11ef-93cc-e7349bc663d1"
+                            },
+                            "percentWeight": null,
+                            "otherwiseLabel": "",
+                            "effectLabel": "Queue Check"
+                        }
+                    ],
+                    "queue": null
+                },
+                "restrictionData": {
+                    "restrictions": [
+                        {
+                            "id": "a540ee14-60f9-4698-9da8-35bde65dae60",
+                            "type": "firebot:permissions",
+                            "mode": "roles",
+                            "roleIds": [
+                                "mod",
+                                "broadcaster"
+                            ],
+                            "ranks": []
+                        }
+                    ],
+                    "mode": "all",
+                    "sendFailMessage": true,
+                    "failMessage": "Sorry, you cannot use this command because: {reason}"
+                },
+                "aliases": [],
+                "sortTags": [
+                    "7b3327d9-6498-4fa4-b842-778e8f1f09f1",
+                    "cfa045cf-a9cd-4d52-a69e-7ed831aec340"
+                ],
+                "treatQuotedTextAsSingleArg": false,
+                "trigger": "!so",
+                "id": "f92b70e0-b7c8-11ee-8a04-598d81ed6cc1",
+                "createdBy": "epaphusuk",
+                "createdAt": "2024-01-20T19:20:29+00:00",
+                "count": 0,
+                "subCommands": [],
+                "lastEditBy": "epaphusuk",
+                "lastEditAt": "2025-03-23T17:36:21.199+00:00",
+                "type": "custom",
+                "description": "Shoutout"
+            },
+            {
+                "active": true,
+                "simple": false,
+                "sendCooldownMessage": true,
+                "cooldownMessage": "This command is still on cooldown for: {timeLeft}",
+                "cooldown": {},
+                "effects": {
+                    "id": "a8591a40-d91f-11ef-93cc-e7349bc663d1",
+                    "list": [
+                        {
+                            "id": "a35f2140-d926-11ef-8303-737b22a4ee6c",
+                            "type": "firebot:runcommand",
+                            "active": true,
+                            "commandType": "custom",
+                            "commandId": "51449b10-d926-11ef-80be-dbec1d55b083",
+                            "args": "$target",
+                            "percentWeight": null
+                        }
+                    ],
+                    "queue": "11fd7640-21dc-11ef-8b67-75527b2d8771",
+                    "queuePriority": "high"
+                },
+                "restrictionData": {
+                    "restrictions": [
+                        {
+                            "id": "a8591a42-d91f-11ef-93cc-e7349bc663d1",
+                            "type": "firebot:permissions",
+                            "mode": "roles",
+                            "roleIds": [
+                                "broadcaster"
+                            ],
+                            "ranks": []
+                        }
+                    ],
+                    "mode": "all",
+                    "sendFailMessage": true,
+                    "failMessage": "Sorry, you cannot use this command because: {reason}"
+                },
+                "aliases": [],
+                "sortTags": [
+                    "7b3327d9-6498-4fa4-b842-778e8f1f09f1",
+                    "cfa045cf-a9cd-4d52-a69e-7ed831aec340"
+                ],
+                "treatQuotedTextAsSingleArg": false,
+                "trigger": "!so-raider",
+                "id": "a8591a43-d91f-11ef-93cc-e7349bc663d1",
+                "createdBy": "epaphusuk",
+                "createdAt": "2024-01-20T19:20:29+00:00",
+                "count": 0,
+                "subCommands": [],
+                "lastEditBy": "epaphusuk",
+                "lastEditAt": "2025-03-23T17:36:26.020+00:00",
+                "type": "custom",
+                "description": "Shoutout - Raider",
+                "hidden": true
+            },
+            {
+                "active": true,
+                "simple": false,
+                "sendCooldownMessage": true,
+                "cooldownMessage": "This command is still on cooldown for: {timeLeft}",
+                "cooldown": {},
+                "effects": {
+                    "id": "a8200eee-80fa-4814-9a07-76e9d7ca34ee",
+                    "list": [
+                        {
+                            "id": "18d91800-d926-11ef-8303-737b22a4ee6c",
+                            "type": "firebot:chat",
+                            "message": "Check out $userDisplayName[$target] who was last playing $game[$target], they are an awesome streamer! - $twitchChannelUrl[$target]  ",
+                            "active": true,
+                            "chatter": "Streamer",
+                            "sendAsReply": false,
+                            "percentWeight": null,
+                            "effectLabel": "Twitch Chat message"
+                        },
+                        {
+                            "id": "18d91802-d926-11ef-8303-737b22a4ee6c",
+                            "type": "firebot:shoutout",
+                            "active": true,
+                            "shoutoutText": "$target is an amazing streamer. Go give them a follow!",
+                            "showLastGame": true,
+                            "bgColor1": "#000000",
+                            "bgColor2": "#184ee4",
+                            "textColor": "#ffffff",
+                            "duration": "5",
+                            "position": "Middle",
+                            "scale": 0.8,
+                            "lastGameText": "Last seen streaming",
+                            "customCoords": {
+                                "top": 0,
+                                "bottom": null,
+                                "left": 0,
+                                "right": null
+                            },
+                            "username": "$target",
+                            "percentWeight": null,
+                            "effectLabel": "Firebot overlay thing",
+                            "abortTimeout": null
+                        },
+                        {
+                            "id": "18d91801-d926-11ef-8303-737b22a4ee6c",
+                            "type": "firebot:twitch-shoutout",
+                            "active": true,
+                            "username": "$target",
+                            "percentWeight": null,
+                            "abortTimeout": null
+                        }
+                    ],
+                    "queue": null
+                },
+                "restrictionData": {
+                    "restrictions": [
+                        {
+                            "id": "44331dc0-d926-11ef-8303-737b22a4ee6c",
+                            "type": "firebot:permissions",
+                            "mode": "roles",
+                            "roleIds": [
+                                "broadcaster"
+                            ],
+                            "ranks": []
+                        }
+                    ],
+                    "mode": "all",
+                    "sendFailMessage": false,
+                    "failMessage": "Sorry @{user}, you cannot use this command because: {reason}",
+                    "useCustomFailMessage": false
+                },
+                "aliases": [],
+                "sortTags": [
+                    "7b3327d9-6498-4fa4-b842-778e8f1f09f1",
+                    "cfa045cf-a9cd-4d52-a69e-7ed831aec340"
+                ],
+                "treatQuotedTextAsSingleArg": false,
+                "trigger": "!so-effect",
+                "description": "Run the actual shoutout",
+                "hidden": true,
+                "id": "51449b10-d926-11ef-80be-dbec1d55b083",
+                "createdBy": "epaphusuk",
+                "createdAt": "2025-01-23T01:06:46.721+00:00",
+                "count": 0,
+                "type": "custom",
+                "lastEditBy": "epaphusuk",
+                "lastEditAt": "2025-03-23T17:36:34.004+00:00"
+            }
+        ],
+        "counters": [],
+        "currencies": [],
+        "effectQueues": [
+            {
+                "name": "Shoutouts",
+                "mode": "auto",
+                "sortTags": [
+                    "4f5e4a9a-98ab-417e-a2e5-13e633246b11"
+                ],
+                "active": false,
+                "id": "11fd7640-21dc-11ef-8b67-75527b2d8771",
+                "interval": 130,
+                "length": 0
+            }
+        ],
+        "events": [
+            {
+                "name": "[ASO] Auto Shoutout",
+                "active": true,
+                "cached": true,
+                "sortTags": [
+                    "278fc122-6777-4e5d-b103-ff69d567f49a",
+                    "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                ],
+                "eventId": "viewer-arrived",
+                "sourceId": "twitch",
+                "effects": {
+                    "list": [
+                        {
+                            "id": "be16e660-cfa5-11ef-a7e2-a337e25c4f5c",
+                            "type": "firebot:conditional-effects",
+                            "active": true,
+                            "ifs": [
+                                {
+                                    "conditionData": {
+                                        "mode": "exclusive",
+                                        "conditions": [
+                                            {
+                                                "type": "firebot:custom",
+                                                "comparisonType": "contains",
+                                                "value": null,
+                                                "leftSideValue": "$readFile[$$autoShoutoutResourcePath\\autoshoutout.txt]",
+                                                "rightSideValue": "$username"
+                                            }
+                                        ]
+                                    },
+                                    "effectData": {
+                                        "list": [
+                                            {
+                                                "id": "e6a5be30-cfa5-11ef-a7e2-a337e25c4f5c",
+                                                "type": "firebot:chat-feed-alert",
+                                                "active": true,
+                                                "message": "Found $username on auto shoutout list so won't shoutout them again",
+                                                "percentWeight": null
+                                            }
+                                        ],
+                                        "id": "be18e230-cfa5-11ef-a7e2-a337e25c4f5c"
+                                    },
+                                    "label": "Check if on autoshoutout list"
+                                }
+                            ],
+                            "otherwiseEffectData": {
+                                "list": [
+                                    {
+                                        "id": "14d638f1-d91c-11ef-93cc-e7349bc663d1",
+                                        "type": "firebot:chat-feed-alert",
+                                        "active": true,
+                                        "message": "$username is on Autoshout list",
+                                        "percentWeight": null,
+                                        "effectLabel": "Autoshoutout user"
+                                    },
+                                    {
+                                        "deleteLineMode": "lines",
+                                        "dontRepeat": true,
+                                        "effectLabel": "Add user to SO list",
+                                        "filepath": "$$autoShoutoutResourcePath\\autoshoutout.txt",
+                                        "id": "ed3dca40-07da-11f0-b424-f373d3f7cf84",
+                                        "replaceLineMode": "lineNumbers",
+                                        "text": "$user",
+                                        "type": "firebot:filewriter",
+                                        "writeMode": "append",
+                                        "active": true,
+                                        "percentWeight": null
+                                    },
+                                    {
+                                        "id": "14d638f3-d91c-11ef-93cc-e7349bc663d1",
+                                        "type": "firebot:chat-feed-alert",
+                                        "active": true,
+                                        "message": "Auto Shoutout for $username added to queue",
+                                        "percentWeight": null
+                                    },
+                                    {
+                                        "id": "14d638f4-d91c-11ef-93cc-e7349bc663d1",
+                                        "type": "firebot:runcommand",
+                                        "active": true,
+                                        "commandType": "custom",
+                                        "commandId": "f92b70e0-b7c8-11ee-8a04-598d81ed6cc1",
+                                        "args": "$username",
+                                        "percentWeight": null,
+                                        "effectLabel": "Add to shoutout queue"
+                                    }
+                                ],
+                                "id": "be1845f0-cfa5-11ef-a7e2-a337e25c4f5c"
+                            },
+                            "percentWeight": null,
+                            "effectLabel": "Check if already had a auto shoutout",
+                            "otherwiseLabel": "if not raider"
+                        }
+                    ],
+                    "id": "ce019470-21d7-11ef-998c-c3cae4befb7b",
+                    "queue": null
+                },
+                "filterData": {
+                    "mode": "exclusive",
+                    "filters": [
+                        {
+                            "type": "firebot:viewerroles",
+                            "comparisonType": "include",
+                            "value": "bf726d40-21d6-11ef-998c-c3cae4befb7b"
+                        }
+                    ]
+                },
+                "id": "88f2f0d0-21d8-11ef-998c-c3cae4befb7b"
+            },
+            {
+                "name": "[ASO] Raid",
+                "active": true,
+                "cached": true,
+                "sortTags": [
+                    "278fc122-6777-4e5d-b103-ff69d567f49a",
+                    "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                ],
+                "eventId": "raid",
+                "sourceId": "twitch",
+                "effects": {
+                    "list": [
+                        {
+                            "deleteLineMode": "lines",
+                            "dontRepeat": true,
+                            "effectLabel": "Add raider to the file",
+                            "filepath": "$$autoShoutoutResourcePath\\autoshoutout.txt",
+                            "id": "09006090-07da-11f0-b424-f373d3f7cf84",
+                            "replaceLineMode": "lineNumbers",
+                            "text": "$user",
+                            "type": "firebot:filewriter",
+                            "writeMode": "append",
+                            "active": true,
+                            "percentWeight": null
+                        },
+                        {
+                            "id": "6cf37a80-0805-11f0-9e0b-19fd8e0b6619",
+                            "type": "firebot:runcommand",
+                            "active": true,
+                            "commandType": "custom",
+                            "commandId": "a8591a43-d91f-11ef-93cc-e7349bc663d1",
+                            "args": "$user",
+                            "percentWeight": null
+                        },
+                        {
+                            "id": "f24237d0-0805-11f0-9e0b-19fd8e0b6619",
+                            "type": "firebot:chat-feed-alert",
+                            "active": true,
+                            "message": "Added $user to shoutout queue",
+                            "percentWeight": null
+                        }
+                    ],
+                    "id": "06c45340-07da-11f0-b424-f373d3f7cf84"
+                },
+                "filterData": {
+                    "mode": "exclusive",
+                    "filters": []
+                },
+                "id": "24c48810-07da-11f0-b424-f373d3f7cf84"
+            },
+            {
+                "name": "[ASO] Clear Auto Shoutout list",
+                "active": true,
+                "cached": true,
+                "sortTags": [
+                    "278fc122-6777-4e5d-b103-ff69d567f49a",
+                    "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                ],
+                "eventId": "stream-offline",
+                "sourceId": "twitch",
+                "effects": {
+                    "list": [
+                        {
+                            "id": "35535a60-07dc-11f0-b424-f373d3f7cf84",
+                            "type": "firebot:run-effect-list",
+                            "active": true,
+                            "listType": "preset",
+                            "presetListArgs": {},
+                            "effectList": {
+                                "list": [],
+                                "id": "35546bd0-07dc-11f0-b424-f373d3f7cf84"
+                            },
+                            "presetListId": "0bd6a020-07dc-11f0-848d-09c6ae104081",
+                            "percentWeight": null,
+                            "effectLabel": "Clear Auto Shoutout file"
+                        },
+                        {
+                            "id": "3f43ca20-07f3-11f0-b424-f373d3f7cf84",
+                            "type": "firebot:run-effect-list",
+                            "active": true,
+                            "listType": "preset",
+                            "presetListArgs": {},
+                            "effectList": {
+                                "list": [],
+                                "id": "3f44db90-07f3-11f0-b424-f373d3f7cf84"
+                            },
+                            "presetListId": "dc6a6770-da7e-11ef-b448-2db39357616a",
+                            "percentWeight": null,
+                            "effectLabel": "Pause Shoutout Queue"
+                        }
+                    ],
+                    "id": "186c7a40-07db-11f0-b424-f373d3f7cf84"
+                },
+                "filterData": {
+                    "mode": "exclusive",
+                    "filters": []
+                },
+                "id": "2e384fc0-07db-11f0-b424-f373d3f7cf84"
+            },
+            {
+                "name": "[ASO] Enable SO Queue - Stream Started",
+                "active": true,
+                "cached": true,
+                "sortTags": [
+                    "278fc122-6777-4e5d-b103-ff69d567f49a",
+                    "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                ],
+                "eventId": "stream-online",
+                "sourceId": "twitch",
+                "effects": {
+                    "list": [
+                        {
+                            "id": "9d1d5d00-07f3-11f0-b424-f373d3f7cf84",
+                            "type": "firebot:chat-feed-alert",
+                            "active": true,
+                            "message": "Stream started, Shoutout queue will enable in 15 minutes",
+                            "percentWeight": null,
+                            "effectLabel": "Chat alert to stay timer started"
+                        },
+                        {
+                            "id": "c977ff50-07f2-11f0-b424-f373d3f7cf84",
+                            "type": "firebot:delay",
+                            "active": true,
+                            "delay": "900",
+                            "percentWeight": null,
+                            "effectLabel": "15 minute delay"
+                        },
+                        {
+                            "id": "7b0a10f0-07f3-11f0-b424-f373d3f7cf84",
+                            "type": "firebot:run-effect-list",
+                            "active": true,
+                            "listType": "preset",
+                            "presetListArgs": {},
+                            "effectList": {
+                                "list": [],
+                                "id": "7b0b2260-07f3-11f0-b424-f373d3f7cf84"
+                            },
+                            "presetListId": "a1503f20-da7e-11ef-b448-2db39357616a",
+                            "percentWeight": null
+                        }
+                    ],
+                    "id": "b211dac0-07f2-11f0-b424-f373d3f7cf84"
+                },
+                "filterData": {
+                    "mode": "exclusive",
+                    "filters": []
+                },
+                "id": "143ffab0-07f3-11f0-b424-f373d3f7cf84"
+            },
+            {
+                "name": "[ASO] Setup Autoshout file location",
+                "active": true,
+                "cached": true,
+                "sortTags": [
+                    "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                ],
+                "eventId": "firebot-started",
+                "sourceId": "firebot",
+                "effects": {
+                    "list": [
+                        {
+                            "id": "db00e3e0-0806-11f0-9e0b-19fd8e0b6619",
+                            "type": "firebot:customvariable",
+                            "active": true,
+                            "ttl": 0,
+                            "name": "autoShoutoutResourcePath",
+                            "variableData": "C:\\Twitch\\Firebot",
+                            "percentWeight": null
+                        }
+                    ],
+                    "id": "bbcc26b0-0806-11f0-9e0b-19fd8e0b6619"
+                },
+                "filterData": {
+                    "mode": "exclusive",
+                    "filters": []
+                },
+                "id": "49b3d180-0807-11f0-9e0b-19fd8e0b6619"
+            }
+        ],
+        "eventGroups": [
+            {
+                "id": "a9bf4e70-07d9-11f0-b424-f373d3f7cf84",
+                "name": "AutoShoutout",
+                "active": true,
+                "events": [
+                    {
+                        "name": "[ASO] Auto Shoutout",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [
+                            "278fc122-6777-4e5d-b103-ff69d567f49a",
+                            "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                        ],
+                        "eventId": "viewer-arrived",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "be16e660-cfa5-11ef-a7e2-a337e25c4f5c",
+                                    "type": "firebot:conditional-effects",
+                                    "active": true,
+                                    "ifs": [
+                                        {
+                                            "conditionData": {
+                                                "mode": "exclusive",
+                                                "conditions": [
+                                                    {
+                                                        "type": "firebot:custom",
+                                                        "comparisonType": "contains",
+                                                        "value": null,
+                                                        "leftSideValue": "$readFile[$$autoShoutoutResourcePath\\autoshoutout.txt]",
+                                                        "rightSideValue": "$username"
+                                                    }
+                                                ]
+                                            },
+                                            "effectData": {
+                                                "list": [
+                                                    {
+                                                        "id": "e6a5be30-cfa5-11ef-a7e2-a337e25c4f5c",
+                                                        "type": "firebot:chat-feed-alert",
+                                                        "active": true,
+                                                        "message": "Found $username on auto shoutout list so won't shoutout them again",
+                                                        "percentWeight": null
+                                                    }
+                                                ],
+                                                "id": "be18e230-cfa5-11ef-a7e2-a337e25c4f5c"
+                                            },
+                                            "label": "Check if on autoshoutout list"
+                                        }
+                                    ],
+                                    "otherwiseEffectData": {
+                                        "list": [
+                                            {
+                                                "id": "14d638f1-d91c-11ef-93cc-e7349bc663d1",
+                                                "type": "firebot:chat-feed-alert",
+                                                "active": true,
+                                                "message": "$username is on Autoshout list",
+                                                "percentWeight": null,
+                                                "effectLabel": "Autoshoutout user"
+                                            },
+                                            {
+                                                "deleteLineMode": "lines",
+                                                "dontRepeat": true,
+                                                "effectLabel": "Add user to SO list",
+                                                "filepath": "$$autoShoutoutResourcePath\\autoshoutout.txt",
+                                                "id": "ed3dca40-07da-11f0-b424-f373d3f7cf84",
+                                                "replaceLineMode": "lineNumbers",
+                                                "text": "$user",
+                                                "type": "firebot:filewriter",
+                                                "writeMode": "append",
+                                                "active": true,
+                                                "percentWeight": null
+                                            },
+                                            {
+                                                "id": "14d638f3-d91c-11ef-93cc-e7349bc663d1",
+                                                "type": "firebot:chat-feed-alert",
+                                                "active": true,
+                                                "message": "Auto Shoutout for $username added to queue",
+                                                "percentWeight": null
+                                            },
+                                            {
+                                                "id": "14d638f4-d91c-11ef-93cc-e7349bc663d1",
+                                                "type": "firebot:runcommand",
+                                                "active": true,
+                                                "commandType": "custom",
+                                                "commandId": "f92b70e0-b7c8-11ee-8a04-598d81ed6cc1",
+                                                "args": "$username",
+                                                "percentWeight": null,
+                                                "effectLabel": "Add to shoutout queue"
+                                            }
+                                        ],
+                                        "id": "be1845f0-cfa5-11ef-a7e2-a337e25c4f5c"
+                                    },
+                                    "percentWeight": null,
+                                    "effectLabel": "Check if already had a auto shoutout",
+                                    "otherwiseLabel": "if not raider"
+                                }
+                            ],
+                            "id": "ce019470-21d7-11ef-998c-c3cae4befb7b",
+                            "queue": null
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": [
+                                {
+                                    "type": "firebot:viewerroles",
+                                    "comparisonType": "include",
+                                    "value": "bf726d40-21d6-11ef-998c-c3cae4befb7b"
+                                }
+                            ]
+                        },
+                        "id": "88f2f0d0-21d8-11ef-998c-c3cae4befb7b"
+                    },
+                    {
+                        "name": "[ASO] Raid",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [
+                            "278fc122-6777-4e5d-b103-ff69d567f49a",
+                            "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                        ],
+                        "eventId": "raid",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "deleteLineMode": "lines",
+                                    "dontRepeat": true,
+                                    "effectLabel": "Add raider to the file",
+                                    "filepath": "$$autoShoutoutResourcePath\\autoshoutout.txt",
+                                    "id": "09006090-07da-11f0-b424-f373d3f7cf84",
+                                    "replaceLineMode": "lineNumbers",
+                                    "text": "$user",
+                                    "type": "firebot:filewriter",
+                                    "writeMode": "append",
+                                    "active": true,
+                                    "percentWeight": null
+                                },
+                                {
+                                    "id": "6cf37a80-0805-11f0-9e0b-19fd8e0b6619",
+                                    "type": "firebot:runcommand",
+                                    "active": true,
+                                    "commandType": "custom",
+                                    "commandId": "a8591a43-d91f-11ef-93cc-e7349bc663d1",
+                                    "args": "$user",
+                                    "percentWeight": null
+                                },
+                                {
+                                    "id": "f24237d0-0805-11f0-9e0b-19fd8e0b6619",
+                                    "type": "firebot:chat-feed-alert",
+                                    "active": true,
+                                    "message": "Added $user to shoutout queue",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "06c45340-07da-11f0-b424-f373d3f7cf84"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "24c48810-07da-11f0-b424-f373d3f7cf84"
+                    },
+                    {
+                        "name": "[ASO] Clear Auto Shoutout list",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [
+                            "278fc122-6777-4e5d-b103-ff69d567f49a",
+                            "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                        ],
+                        "eventId": "stream-offline",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "35535a60-07dc-11f0-b424-f373d3f7cf84",
+                                    "type": "firebot:run-effect-list",
+                                    "active": true,
+                                    "listType": "preset",
+                                    "presetListArgs": {},
+                                    "effectList": {
+                                        "list": [],
+                                        "id": "35546bd0-07dc-11f0-b424-f373d3f7cf84"
+                                    },
+                                    "presetListId": "0bd6a020-07dc-11f0-848d-09c6ae104081",
+                                    "percentWeight": null,
+                                    "effectLabel": "Clear Auto Shoutout file"
+                                },
+                                {
+                                    "id": "3f43ca20-07f3-11f0-b424-f373d3f7cf84",
+                                    "type": "firebot:run-effect-list",
+                                    "active": true,
+                                    "listType": "preset",
+                                    "presetListArgs": {},
+                                    "effectList": {
+                                        "list": [],
+                                        "id": "3f44db90-07f3-11f0-b424-f373d3f7cf84"
+                                    },
+                                    "presetListId": "dc6a6770-da7e-11ef-b448-2db39357616a",
+                                    "percentWeight": null,
+                                    "effectLabel": "Pause Shoutout Queue"
+                                }
+                            ],
+                            "id": "186c7a40-07db-11f0-b424-f373d3f7cf84"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "2e384fc0-07db-11f0-b424-f373d3f7cf84"
+                    },
+                    {
+                        "name": "[ASO] Enable SO Queue - Stream Started",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [
+                            "278fc122-6777-4e5d-b103-ff69d567f49a",
+                            "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                        ],
+                        "eventId": "stream-online",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "9d1d5d00-07f3-11f0-b424-f373d3f7cf84",
+                                    "type": "firebot:chat-feed-alert",
+                                    "active": true,
+                                    "message": "Stream started, Shoutout queue will enable in 15 minutes",
+                                    "percentWeight": null,
+                                    "effectLabel": "Chat alert to stay timer started"
+                                },
+                                {
+                                    "id": "c977ff50-07f2-11f0-b424-f373d3f7cf84",
+                                    "type": "firebot:delay",
+                                    "active": true,
+                                    "delay": "900",
+                                    "percentWeight": null,
+                                    "effectLabel": "15 minute delay"
+                                },
+                                {
+                                    "id": "7b0a10f0-07f3-11f0-b424-f373d3f7cf84",
+                                    "type": "firebot:run-effect-list",
+                                    "active": true,
+                                    "listType": "preset",
+                                    "presetListArgs": {},
+                                    "effectList": {
+                                        "list": [],
+                                        "id": "7b0b2260-07f3-11f0-b424-f373d3f7cf84"
+                                    },
+                                    "presetListId": "a1503f20-da7e-11ef-b448-2db39357616a",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "b211dac0-07f2-11f0-b424-f373d3f7cf84"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "143ffab0-07f3-11f0-b424-f373d3f7cf84"
+                    },
+                    {
+                        "name": "[ASO] Setup Autoshout file location",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [
+                            "79a05f11-0277-4a85-9d5b-c6d56e9b641d"
+                        ],
+                        "eventId": "firebot-started",
+                        "sourceId": "firebot",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "db00e3e0-0806-11f0-9e0b-19fd8e0b6619",
+                                    "type": "firebot:customvariable",
+                                    "active": true,
+                                    "ttl": 0,
+                                    "name": "autoShoutoutResourcePath",
+                                    "variableData": "C:\\Twitch\\Firebot",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "bbcc26b0-0806-11f0-9e0b-19fd8e0b6619"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "49b3d180-0807-11f0-9e0b-19fd8e0b6619"
+                    }
+                ]
+            }
+        ],
+        "hotkeys": [],
+        "presetEffectLists": [
+            {
+                "name": "[ASO] Shoutout queue - Start",
+                "effects": {
+                    "list": [
+                        {
+                            "id": "99bbc950-da7e-11ef-92e0-77515767cc68",
+                            "type": "firebot:pause-effect-queue",
+                            "active": true,
+                            "effectQueue": "11fd7640-21dc-11ef-8b67-75527b2d8771",
+                            "action": "Resume",
+                            "percentWeight": null
+                        },
+                        {
+                            "id": "c2ef93b0-da7e-11ef-92e0-77515767cc68",
+                            "type": "firebot:chat-feed-alert",
+                            "active": true,
+                            "message": "Starting Shoutout queue",
+                            "percentWeight": null
+                        }
+                    ],
+                    "id": "8d4ad1c0-da7e-11ef-92e0-77515767cc68"
+                },
+                "args": [],
+                "sortTags": [
+                    "b01cb8f1-55bf-4c88-a7ec-719b5d5cc065",
+                    "12ac2c52-ed0b-490b-a9a6-650b48c33bd9"
+                ],
+                "id": "a1503f20-da7e-11ef-b448-2db39357616a"
+            },
+            {
+                "name": "[ASO] Shoutout queue - Stop",
+                "effects": {
+                    "list": [
+                        {
+                            "id": "dc6a6770-da7e-11ef-92e0-77515767cc68",
+                            "type": "firebot:pause-effect-queue",
+                            "active": true,
+                            "effectQueue": "11fd7640-21dc-11ef-8b67-75527b2d8771",
+                            "action": "Pause",
+                            "percentWeight": null
+                        },
+                        {
+                            "id": "dc6a6771-da7e-11ef-92e0-77515767cc68",
+                            "type": "firebot:chat-feed-alert",
+                            "active": true,
+                            "message": "Stopping Shoutout queue",
+                            "percentWeight": null
+                        }
+                    ],
+                    "id": "dc6a6772-da7e-11ef-92e0-77515767cc68"
+                },
+                "args": [],
+                "sortTags": [
+                    "b01cb8f1-55bf-4c88-a7ec-719b5d5cc065",
+                    "12ac2c52-ed0b-490b-a9a6-650b48c33bd9"
+                ],
+                "id": "dc6a6770-da7e-11ef-b448-2db39357616a"
+            },
+            {
+                "name": "[ASO] Clear Auto shoutout file",
+                "effects": {
+                    "list": [
+                        {
+                            "deleteLineMode": "lines",
+                            "effectLabel": "Clear the autoshoutout file",
+                            "filepath": "$$autoShoutoutResourcePath\\autoshoutout.txt",
+                            "id": "02713ae0-07dc-11f0-b424-f373d3f7cf84",
+                            "replaceLineMode": "lineNumbers",
+                            "type": "firebot:filewriter",
+                            "writeMode": "delete-all",
+                            "active": true,
+                            "percentWeight": null
+                        },
+                        {
+                            "id": "4fcf4a70-07dc-11f0-b424-f373d3f7cf84",
+                            "type": "firebot:chat-feed-alert",
+                            "active": true,
+                            "message": "Clearing Autoutshout file",
+                            "percentWeight": null
+                        },
+                        {
+                            "id": "8d4982d0-07dc-11f0-b424-f373d3f7cf84",
+                            "type": "firebot:activity-feed-alert",
+                            "active": true,
+                            "message": "Clearing Autoutshout file",
+                            "percentWeight": null
+                        }
+                    ],
+                    "id": "00204600-07dc-11f0-b424-f373d3f7cf84"
+                },
+                "args": [],
+                "sortTags": [
+                    "b01cb8f1-55bf-4c88-a7ec-719b5d5cc065",
+                    "12ac2c52-ed0b-490b-a9a6-650b48c33bd9"
+                ],
+                "id": "0bd6a020-07dc-11f0-848d-09c6ae104081"
+            }
+        ],
+        "timers": [],
+        "variableMacros": [],
+        "viewerRoles": [
+            {
+                "name": "AutoShoutout",
+                "viewers": [],
+                "id": "bf726d40-21d6-11ef-998c-c3cae4befb7b"
+            }
+        ],
+        "viewerRankLadders": [],
+        "quickActions": []
+    },
+    "requireCurrency": false,
+    "importQuestions": [
+        {
+            "id": "d0895867-33e2-497a-80b4-0b8310e00074",
+            "question": "Please enter the path you want to store the Auto Shoutout file in",
+            "defaultAnswer": "C:\\Twitch\\Firebot",
+            "answerType": "text",
+            "replaceToken": "C:\\Twitch\\Firebot"
+        }
+    ]
+}
