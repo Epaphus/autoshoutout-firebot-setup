@@ -1,4 +1,3 @@
-## **IN BETA**  
 
 Auto Shoutout and Shoutout queuing system for Firebot made by Epaphus (EpaphusUK On Twitch)    
    
